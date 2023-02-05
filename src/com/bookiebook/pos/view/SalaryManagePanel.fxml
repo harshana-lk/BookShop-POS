@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="675.0" prefWidth="1000.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bookiebook.pos.controller.SalaryManagePanelController">
+    <children>
+        <Label layoutX="365.0" layoutY="14.0" text="Salary Management" textFill="WHITE">
+            <font>
+                <Font name="Consolas Bold" size="29.0" />
+            </font>
+        </Label>
+        <Separator layoutX="32.0" layoutY="55.0" opacity="0.21" prefHeight="0.0" prefWidth="936.0" />
+        <AnchorPane layoutX="33.0" layoutY="71.0" prefHeight="137.0" prefWidth="936.0" style="-fx-border-color: gray; -fx-border-width: 3; -fx-border-opacity: 0.5;">
+            <children>
+                <Label layoutX="42.0" layoutY="36.0" text="ID" textFill="WHITE">
+                    <font>
+                        <Font name="Consolas Bold" size="18.0" />
+                    </font>
+                </Label>
+                <JFXTextField fx:id="txtID" focusColor="WHITE" layoutX="42.0" layoutY="53.0" prefHeight="31.0" prefWidth="153.0" style="-fx-text-fill: WHITE;" unFocusColor="WHITE" />
+                <Label layoutX="356.0" layoutY="36.0" text="Status" textFill="WHITE">
+                    <font>
+                        <Font name="Consolas Bold" size="18.0" />
+                    </font>
+                </Label>
+                <Label layoutX="727.0" layoutY="36.0" text="Salary" textFill="WHITE">
+                    <font>
+                        <Font name="Consolas Bold" size="18.0" />
+                    </font>
+                </Label>
+                <JFXTextField fx:id="txtSalary" focusColor="WHITE" layoutX="727.0" layoutY="53.0" prefHeight="31.0" prefWidth="153.0" style="-fx-text-fill: WHITE;" unFocusColor="WHITE" />
+            <JFXComboBox fx:id="cmbStatus" focusColor="WHITE" layoutX="347.0" layoutY="50.0" prefHeight="35.0" prefWidth="195.0" style="-fx-text-fill: WHITE;" styleClass="list-cell" stylesheets="@../../../../style.css" unFocusColor="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXComboBox>
+            </children>
+        </AnchorPane>
+        <JFXButton fx:id="btnSave" buttonType="RAISED" layoutX="893.0" layoutY="225.0" onAction="#saveOnAction" style="-fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: #69adf2; -fx-border-width: 3;" text="Save" textAlignment="CENTER" textFill="#69adf2">
+            <font>
+                <Font name="Consolas Bold" size="19.0" />
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </JFXButton>
+        <TableView fx:id="tblSalary" layoutX="33.0" layoutY="290.0" prefHeight="353.0" prefWidth="936.0" style="-fx-background-color: #202020; -fx-text-fill: WHITE;">
+            <columns>
+                <TableColumn fx:id="colID" prefWidth="195.0" text="ID" />
+                <TableColumn fx:id="colStatus" prefWidth="304.0" text="Status" />
+                <TableColumn fx:id="colSalary" prefWidth="226.0" text="Salary" />
+            <TableColumn fx:id="colOption" prefWidth="210.0" text="Option" />
+            </columns>
+        </TableView>
+      <TextField fx:id="txtSearch" layoutX="34.0" layoutY="226.0" prefHeight="42.0" prefWidth="831.0" promptText="Search" style="-fx-background-color: transparent; -fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: gray; -fx-border-width: 3; -fx-text-fill: WHITE;">
+         <font>
+            <Font name="Consolas Bold" size="15.0" />
+         </font>
+      </TextField>
+    </children>
+</AnchorPane>

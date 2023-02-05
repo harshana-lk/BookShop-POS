@@ -1,0 +1,8 @@
+.combo-box .list-cell
+{
+    -fx-font-family: arial;
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
+    -fx-text-inner-color: black;
+    -fx-background-color: black;
+}
