@@ -1,0 +1,91 @@
+DROP DATABASE bookiebook;
+
+CREATE DATABASE bookieBook;
+
+USE bookieBook;
+
+CREATE TABLE employee(
+	empID VARCHAR(45) PRIMARY KEY,
+	name VARCHAR(45) NOT NULL,
+	status VARCHAR(45) NOT NULL,
+	address VARCHAR(45) NOT NULL,
+	phone INT
+);
+
+
+CREATE TABLE user(
+	userID VARCHAR(45) PRIMARY KEY,
+	empID VARCHAR(45),
+	username VARCHAR (45) NOT NULL,
+	status VARCHAR(45) NOT NULL,
+	password VARCHAR(45) NOT NULL,
+	hint VARCHAR(45) NOT NULL
+
+);
+
+CREATE TABLE category(
+	categoryID VARCHAR(45) PRIMARY KEY,
+	name VARCHAR(45) NOT NULL,
+	description VARCHAR(45) NOT NULL);
+
+CREATE TABLE vendor(
+	vendorID VARCHAR(45) PRIMARY KEY,
+	name VARCHAR(45),
+	description VARCHAR(45)
+);
+
+CREATE TABLE item(
+	itemID VARCHAR(45) PRIMARY KEY,
+	name VARCHAR(45) NOT NULL,
+	categoryID VARCHAR(45),
+	vendorID VARCHAR(45),
+	qtyOnHand INT,
+	price DECIMAL(10,2) NOT NULL
+);
+
+
+CREATE TABLE customer(
+	custID VARCHAR(45) PRIMARY KEY,
+	name VARCHAR(45) NOT NULL,
+	nic VARCHAR(45) NOT NULL,
+	address VARCHAR(45),
+	phone INT);
+
+CREATE TABLE orders(
+	orderID VARCHAR(45) PRIMARY KEY,
+	oredrDate VARCHAR(45),
+	cost DECIMAL(10,2) ,
+	custID VARCHAR(45)	
+);
+
+
+CREATE TABLE salary(
+	salaryID VARCHAR(45) PRIMARY KEY,
+	status VARCHAR(45),
+	salary DECIMAL(10,2) NOT NULL
+);
+
+
+CREATE TABLE orderDetails(
+	itemID VARCHAR(45),
+	orderDate VARCHAR(45),
+	unitPrice DOUBLE,
+	qty INT NOT NULL
+	
+);
+
+CREATE TABLE delivery(
+	deliveryID VARCHAR(45) PRIMARY KEY,
+	method VARCHAR(45) NOT NULL,
+	status VARCHAR(45) NOT NULL,
+	PRICE INT
+);
+
+CREATE TABLE payment(
+	paymentID VARCHAR(45) PRIMARY KEY,
+	orderID VARCHAR(45),
+	method VARCHAR(45),
+	CONSTRAINT FOREIGN KEY(orderID) REFERENCES orders(orderID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
