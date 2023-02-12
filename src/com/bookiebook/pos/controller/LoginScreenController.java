@@ -1,6 +1,6 @@
 package com.bookiebook.pos.controller;
 
-import com.bookiebook.pos.util.CrudUtil;
+import com.bookiebook.pos.dao.CrudUtil;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -36,13 +36,14 @@ public class LoginScreenController {
     public JFXPasswordField txtPassword;
 
     public static int login(String user, String pass) throws SQLException, ClassNotFoundException {
-        ResultSet res = CrudUtil.execute("SELECT status FROM user WHERE username=? AND password=?",
+        ResultSet res = CrudUtil.execute("SELECT status FROM users WHERE username=? AND password=?",
                 user, pass
         );
         if (res.next()) {
-            if (res.getString("status").equals("Admin")) {
+            if (res.getString("status").equals("admin")) {
+
                 return 1;
-            } else if (res.getString("status").equals("Cashier")) return 0;
+            } else if (res.getString("status").equals("cashier")) return 0;
         }
         return -1;
     }

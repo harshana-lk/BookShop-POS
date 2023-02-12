@@ -1,24 +1,26 @@
 package com.bookiebook.pos.controller;
 
-import com.bookiebook.pos.DB.DBConnection;
+import com.bookiebook.pos.bo.BOFactory;
+import com.bookiebook.pos.bo.BOTypes;
+import com.bookiebook.pos.bo.custom.SalaryBO;
 import com.bookiebook.pos.model.SalaryModel;
 import com.bookiebook.pos.to.Salary;
 import com.bookiebook.pos.view.tm.SalaryTm;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Optional;
 
 public class SalaryManagePanelController {
+    private final SalaryBO salaryBO = (SalaryBO) BOFactory.getInstance().getBO(BOTypes.SALARY);
     public JFXTextField txtID;
     public JFXTextField txtSalary;
     public JFXButton btnSave;
@@ -29,17 +31,13 @@ public class SalaryManagePanelController {
     public JFXComboBox<String> cmbStatus;
     public TableColumn<Object, Object> colOption;
     public TableView<SalaryTm> tblSalary;
+    private String searchText = "";
 
-    private String searchText="";
-
-    public boolean validate(){
-        if (!(txtID.getText().isEmpty()||cmbStatus.getValue().equals(null)||txtSalary.getText().isEmpty())){
-            return true;
-        }
-        return false;
+    public boolean validate() {
+        return !(txtID.getText().isEmpty() || cmbStatus.getValue().equals(null) || txtSalary.getText().isEmpty());
     }
 
-    public void initialize(){
+    public void initialize() {
         colID.setCellValueFactory(new PropertyValueFactory<>("id"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         colSalary.setCellValueFactory(new PropertyValueFactory<>("salary"));
@@ -54,14 +52,14 @@ public class SalaryManagePanelController {
         tblSalary.getSelectionModel()
                 .selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
-                    if (null!=newValue){// newValue!=null
+                    if (null != newValue) {// newValue!=null
                         setData(newValue);
                     }
                 });
 
         txtSearch.textProperty()
                 .addListener((observable, oldValue, newValue) -> {
-                    searchText=newValue;
+                    searchText = newValue;
                     searchSalary(searchText);
                 });
     }
@@ -69,37 +67,44 @@ public class SalaryManagePanelController {
     private void setSalaryID() {
         try {
 
-            String sql = "SELECT salaryID FROM `salary` ORDER BY salaryID DESC LIMIT 1";
-            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
-            ResultSet set = statement.executeQuery();
-            if (set.next()) {
-                String tempOrderId = set.getString(1);
-                String[] array = tempOrderId.split("-");//[D,3]
-                int tempNumber = Integer.parseInt(array[1]);
-                int finalizeOrderId = tempNumber + 1;
-                txtID.setText("SM-" + finalizeOrderId);
-            } else {
-                txtID.setText("SM-1");
-            }
+//            String sql = "SELECT salaryID FROM `salary` ORDER BY salaryID DESC LIMIT 1";
+//            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
+//            ResultSet set = statement.executeQuery();
+//            if (set.next()) {
+//                String tempOrderId = set.getString(1);
+//                String[] array = tempOrderId.split("-");//[D,3]
+//                int tempNumber = Integer.parseInt(array[1]);
+//                int finalizeOrderId = tempNumber + 1;
+//                txtID.setText("SM-" + finalizeOrderId);
+//            } else {
+//                txtID.setText("SM-1");
+//            }
+
+            String slaryIDs = salaryBO.setSlaryIDs();
+            txtID.setText(slaryIDs);
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     private void setStatusData() {
-        ObservableList<String> salaryTms = FXCollections.observableArrayList();
 
 
         try {
-            String sql = "SELECT status FROM employee";
-            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery();
+//            ObservableList<String> salaryTms = FXCollections.observableArrayList();
+//            String sql = "SELECT status FROM employee";
+//            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
+//            ResultSet resultSet = statement.executeQuery();
+//
+//            while(resultSet.next()){
+//                salaryTms.add(resultSet.getString(1));
+//            }
 
-            while(resultSet.next()){
-                salaryTms.add(resultSet.getString(1));
-            }
+            ObservableList<String> status = salaryBO.setStatus();
 
-            cmbStatus.setItems(salaryTms);
+            cmbStatus.setItems(status);
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -149,8 +154,8 @@ public class SalaryManagePanelController {
                     e.printStackTrace();
                 }
             }
-        }else {
-            Alert alert = new Alert(Alert.AlertType.WARNING,"Please Fill the Unfilled Data !");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Please Fill the Unfilled Data !");
             alert.show();
         }
 
@@ -163,52 +168,55 @@ public class SalaryManagePanelController {
     }
 
     private void searchSalary(String text) {
-            String searchText="%"+text+"%";
-            try {
+        String searchText = "%" + text + "%";
+        try {
 
-                ObservableList<SalaryTm> tmList = FXCollections.observableArrayList();
+//                ObservableList<SalaryTm> tmList = FXCollections.observableArrayList();
+//
+//                String sql = "SELECT * FROM salary WHERE salaryID LIKE ? || status LIKE ?";
+//                PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
+//                statement.setString(1,searchText);
+//                statement.setString(2,searchText);
+//                ResultSet set = statement.executeQuery();
+//
+//                while (set.next()){
+//                    Button btn = new Button("Delete");
+//                    SalaryTm tm = new SalaryTm(
+//                            set.getString(1),
+//                            set.getString(2),
+//                            set.getDouble(3),
+//                            btn);
+//                    tmList.add(tm);
+//                    btn.setOnAction(event -> {
+//                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+//                                "are you sure whether do you want to delete this Salary?",
+//                                ButtonType.YES, ButtonType.NO);
+//                        Optional<ButtonType> buttonType = alert.showAndWait();
+//                        if (buttonType.get() == ButtonType.YES) {
+//
+//                            try {
+//                                boolean delete = new SalaryModel().deleteSalary(tm);
+//                                if (delete) {
+//                                    searchSalary(searchText);
+//                                    new Alert(Alert.AlertType.INFORMATION, "Salary Deleted!").show();
+//                                } else {
+//                                    new Alert(Alert.AlertType.WARNING, "Try Again!").show();
+//                                }
+//                            }catch (ClassNotFoundException | SQLException e){
+//                                e.printStackTrace();
+//                            }
+//
+//
+//                        }
+//                    });
+//                }
 
-                String sql = "SELECT * FROM salary WHERE salaryID LIKE ? || status LIKE ?";
-                PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
-                statement.setString(1,searchText);
-                statement.setString(2,searchText);
-                ResultSet set = statement.executeQuery();
 
-                while (set.next()){
-                    Button btn = new Button("Delete");
-                    SalaryTm tm = new SalaryTm(
-                            set.getString(1),
-                            set.getString(2),
-                            set.getDouble(3),
-                            btn);
-                    tmList.add(tm);
-                    btn.setOnAction(event -> {
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                                "are you sure whether do you want to delete this Salary?",
-                                ButtonType.YES, ButtonType.NO);
-                        Optional<ButtonType> buttonType = alert.showAndWait();
-                        if (buttonType.get() == ButtonType.YES) {
+            ObservableList<SalaryTm> salaryTms = salaryBO.SalaryFunctions(searchText);
+            tblSalary.setItems(salaryTms);
 
-                            try {
-                                boolean delete = new SalaryModel().deleteSalary(tm);
-                                if (delete) {
-                                    searchSalary(searchText);
-                                    new Alert(Alert.AlertType.INFORMATION, "Salary Deleted!").show();
-                                } else {
-                                    new Alert(Alert.AlertType.WARNING, "Try Again!").show();
-                                }
-                            }catch (ClassNotFoundException | SQLException e){
-                                e.printStackTrace();
-                            }
-
-
-                        }
-                    });
-                }
-                tblSalary.setItems(tmList);
-
-            }catch (ClassNotFoundException | SQLException e){
-                e.printStackTrace();
-            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

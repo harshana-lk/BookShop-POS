@@ -1,27 +1,20 @@
 package com.bookiebook.pos.controller;
 
-import com.bookiebook.pos.DB.DBConnection;
-import com.bookiebook.pos.model.OrderDetailsModel;
+import com.bookiebook.pos.bo.BOFactory;
+import com.bookiebook.pos.bo.BOTypes;
+import com.bookiebook.pos.bo.custom.OrderDetailsBO;
 import com.bookiebook.pos.view.tm.OrderTm;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
-import java.util.Optional;
 
 public class OrderDetailsPanelController {
 
+    private final OrderDetailsBO orderDetailsBO = (OrderDetailsBO) BOFactory.getInstance().getBO(BOTypes.ORDERDETAILS);
+    private final String serachText = "";
     public TableView<OrderTm> tblOrderDetails;
     public TableColumn colOrderID;
     public TableColumn colCustomer;
@@ -29,9 +22,7 @@ public class OrderDetailsPanelController {
     public TableColumn colTotal;
     public TableColumn colOption;
 
-    private String serachText = "";
-
-    public void initialize(){
+    public void initialize() {
         colOrderID.setCellValueFactory(new PropertyValueFactory<>("orderId"));
         colCustomer.setCellValueFactory(new PropertyValueFactory<>("name"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -41,48 +32,50 @@ public class OrderDetailsPanelController {
     }
 
     private void loadOrders(String text) {
-        String searchText="%"+text+"%";
+        String searchText = "%" + text + "%";
 
-        try{
-            String sql = "SELECT * FROM `orders`";
-            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
-            ResultSet set = statement.executeQuery();
+        try {
+//            String sql = "SELECT * FROM `orders`";
+//            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
+//            ResultSet set = statement.executeQuery();
+//
+//            ObservableList<OrderTm> tmList= FXCollections.observableArrayList();
+//
+//            while (set.next()){
+//                Button btn = new Button("Delete");
+//                OrderTm tm= new OrderTm(
+//                        set.getString(1),
+//                        set.getString(4),
+//                        new Date(),
+//                        set.getDouble(3),btn);
+//                tmList.add(tm);
+//
+//                btn.setOnAction(e-> {
+//                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+//                            "are you sure whether do you want to delete this Order?",
+//                            ButtonType.YES, ButtonType.NO);
+//                    Optional<ButtonType> buttonType = alert.showAndWait();
+//                    if (buttonType.get() == ButtonType.YES) {
+//
+//                        try {
+//                            boolean delete = new OrderDetailsModel().deleteOrder(tm);
+//                            if (delete) {
+//                                loadOrders(searchText);
+//                                new Alert(Alert.AlertType.INFORMATION, "Order Deleted!").show();
+//                            } else {
+//                                new Alert(Alert.AlertType.WARNING, "Try Again!").show();
+//                            }
+//                        } catch (ClassNotFoundException | SQLException exception) {
+//                            exception.printStackTrace();
+//                        }
+//                    }
+//                });
+//            }
 
-            ObservableList<OrderTm> tmList= FXCollections.observableArrayList();
+            ObservableList<OrderTm> orderTms = orderDetailsBO.OrderDetailsFunctions(searchText);
+            tblOrderDetails.setItems(orderTms);
 
-            while (set.next()){
-                Button btn = new Button("Delete");
-                OrderTm tm= new OrderTm(
-                        set.getString(1),
-                        set.getString(4),
-                        new Date(),
-                        set.getDouble(3),btn);
-                tmList.add(tm);
-
-                btn.setOnAction(e-> {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                            "are you sure whether do you want to delete this Order?",
-                            ButtonType.YES, ButtonType.NO);
-                    Optional<ButtonType> buttonType = alert.showAndWait();
-                    if (buttonType.get() == ButtonType.YES) {
-
-                        try {
-                            boolean delete = new OrderDetailsModel().deleteOrder(tm);
-                            if (delete) {
-                                loadOrders(searchText);
-                                new Alert(Alert.AlertType.INFORMATION, "Order Deleted!").show();
-                            } else {
-                                new Alert(Alert.AlertType.WARNING, "Try Again!").show();
-                            }
-                        } catch (ClassNotFoundException | SQLException exception) {
-                            exception.printStackTrace();
-                        }
-                    }
-                });
-            }
-            tblOrderDetails.setItems(tmList);
-
-        }catch (SQLException | ClassNotFoundException e){
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

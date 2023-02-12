@@ -1,7 +1,7 @@
 package com.bookiebook.pos.model;
 
 import com.bookiebook.pos.to.Employee;
-import com.bookiebook.pos.util.CrudUtil;
+import com.bookiebook.pos.dao.CrudUtil;
 import com.bookiebook.pos.view.tm.EmployeeTm;
 
 import java.sql.SQLException;

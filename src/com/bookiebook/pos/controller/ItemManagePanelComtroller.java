@@ -1,25 +1,26 @@
 package com.bookiebook.pos.controller;
 
-import com.bookiebook.pos.DB.DBConnection;
+import com.bookiebook.pos.bo.BOFactory;
+import com.bookiebook.pos.bo.BOTypes;
+import com.bookiebook.pos.bo.custom.ItemBO;
 import com.bookiebook.pos.model.ItemModel;
-import com.bookiebook.pos.to.Customer;
 import com.bookiebook.pos.to.Item;
 import com.bookiebook.pos.view.tm.ItemTm;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Optional;
 
 public class ItemManagePanelComtroller {
+    private final ItemBO itemBO = (ItemBO) BOFactory.getInstance().getBO(BOTypes.ITEM);
     public TableView<ItemTm> tblItem;
     public JFXButton btnSave;
     public JFXTextField txtPrice;
@@ -36,14 +37,10 @@ public class ItemManagePanelComtroller {
     public JFXComboBox<String> cmbVendor;
     public TableColumn<Object, Object> colName;
     public TableColumn<Object, Object> colVendor;
-
     private String searchText = "";
 
-    public boolean validate(){
-        if (!(txtID.getText().isEmpty()||txtName.getText().isEmpty()||cmbVendor.getValue().isEmpty()||cmbcategory.getValue().isEmpty()||txtQty.getText().isEmpty()||txtPrice.getText().isEmpty())){
-            return true;
-        }
-        return false;
+    public boolean validate() {
+        return !(txtID.getText().isEmpty() || txtName.getText().isEmpty() || cmbVendor.getValue().isEmpty() || cmbcategory.getValue().isEmpty() || txtQty.getText().isEmpty() || txtPrice.getText().isEmpty());
     }
 
     public void initialize() {
@@ -81,37 +78,43 @@ public class ItemManagePanelComtroller {
     private void setItemID() {
         try {
 
-            String sql = "SELECT itemID FROM `item` ORDER BY itemID DESC LIMIT 1";
-            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
-            ResultSet set = statement.executeQuery();
-            if (set.next()) {
-                String tempOrderId = set.getString(1);
-                String[] array = tempOrderId.split("-");//[D,3]
-                int tempNumber = Integer.parseInt(array[1]);
-                int finalizeOrderId = tempNumber + 1;
-                txtID.setText("ITEM-" + finalizeOrderId);
-            } else {
-                txtID.setText("ITEM-1");
-            }
+//            String sql = "SELECT itemID FROM `item` ORDER BY itemID DESC LIMIT 1";
+//            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
+//            ResultSet set = statement.executeQuery();
+//            if (set.next()) {
+//                String tempOrderId = set.getString(1);
+//                String[] array = tempOrderId.split("-");//[D,3]
+//                int tempNumber = Integer.parseInt(array[1]);
+//                int finalizeOrderId = tempNumber + 1;
+//                txtID.setText("ITEM-" + finalizeOrderId);
+//            } else {
+//                txtID.setText("ITEM-1");
+//            }
+
+            String itemIDs = itemBO.setItemIDs();
+            txtID.setText(itemIDs);
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     private void loadVendors() {
-        ObservableList<String> vendorTms = FXCollections.observableArrayList();
 
 
         try {
-            String sql = "SELECT name FROM vendor";
-            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery();
+//            ObservableList<String> vendorTms = FXCollections.observableArrayList();
+//            String sql = "SELECT name FROM vendor";
+//            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
+//            ResultSet resultSet = statement.executeQuery();
+//
+//            while (resultSet.next()) {
+//                vendorTms.add(resultSet.getString(1));
+//            }
 
-            while (resultSet.next()) {
-                vendorTms.add(resultSet.getString(1));
-            }
+            ObservableList<String> vendors = itemBO.loadVendors();
+            cmbVendor.setItems(vendors);
 
-            cmbVendor.setItems(vendorTms);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -119,19 +122,22 @@ public class ItemManagePanelComtroller {
     }
 
     private void loadCategories() {
-        ObservableList<String> categoryTms = FXCollections.observableArrayList();
 
 
         try {
-            String sql = "SELECT name FROM category";
-            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery();
+//            ObservableList<String> categoryTms = FXCollections.observableArrayList();
+//            String sql = "SELECT name FROM category";
+//            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
+//            ResultSet resultSet = statement.executeQuery();
+//
+//            while (resultSet.next()) {
+//                categoryTms.add(resultSet.getString(1));
+//            }
 
-            while (resultSet.next()) {
-                categoryTms.add(resultSet.getString(1));
-            }
 
-            cmbcategory.setItems(categoryTms);
+            ObservableList<String> categories = itemBO.loadCategories();
+            cmbcategory.setItems(categories);
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -187,8 +193,8 @@ public class ItemManagePanelComtroller {
                     e.printStackTrace();
                 }
             }
-        }else {
-            Alert alert = new Alert(Alert.AlertType.WARNING,"Please Fill the Unfilled Data !");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Please Fill the Unfilled Data !");
             alert.show();
         }
     }
@@ -198,47 +204,49 @@ public class ItemManagePanelComtroller {
 
         try {
 
-            ObservableList<ItemTm> tmList = FXCollections.observableArrayList();
+//            ObservableList<ItemTm> tmList = FXCollections.observableArrayList();
+//
+//            String sql = "SELECT * FROM item WHERE itemID LIKE ? || name LIKE ?";
+//            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
+//            statement.setString(1, searchText);
+//            statement.setString(2, searchText);
+//            ResultSet set = statement.executeQuery();
+//
+//            while (set.next()) {
+//                Button btn = new Button("Delete");
+//                ItemTm tm = new ItemTm(
+//                        set.getString(1),
+//                        set.getString(2),
+//                        set.getString(3),
+//                        set.getString(4),
+//                        set.getInt(5),
+//                        set.getDouble(6),
+//                        btn);
+//                tmList.add(tm);
+//                btn.setOnAction(event -> {
+//                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+//                            "are you sure whether do you want to delete this item?",
+//                            ButtonType.YES, ButtonType.NO);
+//                    Optional<ButtonType> buttonType = alert.showAndWait();
+//                    if (buttonType.get() == ButtonType.YES) {
+//
+//                        try {
+//                            boolean delete = new ItemModel().deleteItem(tm);
+//                            if (delete) {
+//                                searchItem(searchText);
+//                                new Alert(Alert.AlertType.INFORMATION, "Item Deleted!").show();
+//                            } else {
+//                                new Alert(Alert.AlertType.WARNING, "Try Again!").show();
+//                            }
+//                        } catch (ClassNotFoundException | SQLException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
+//            }
 
-            String sql = "SELECT * FROM item WHERE itemID LIKE ? || name LIKE ?";
-            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
-            statement.setString(1, searchText);
-            statement.setString(2, searchText);
-            ResultSet set = statement.executeQuery();
-
-            while (set.next()) {
-                Button btn = new Button("Delete");
-                ItemTm tm = new ItemTm(
-                        set.getString(1),
-                        set.getString(2),
-                        set.getString(3),
-                        set.getString(4),
-                        set.getInt(5),
-                        set.getDouble(6),
-                        btn);
-                tmList.add(tm);
-                btn.setOnAction(event -> {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                            "are you sure whether do you want to delete this item?",
-                            ButtonType.YES, ButtonType.NO);
-                    Optional<ButtonType> buttonType = alert.showAndWait();
-                    if (buttonType.get() == ButtonType.YES) {
-
-                        try {
-                            boolean delete = new ItemModel().deleteItem(tm);
-                            if (delete) {
-                                searchItem(searchText);
-                                new Alert(Alert.AlertType.INFORMATION, "Item Deleted!").show();
-                            } else {
-                                new Alert(Alert.AlertType.WARNING, "Try Again!").show();
-                            }
-                        } catch (ClassNotFoundException | SQLException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            }
-            tblItem.setItems(tmList);
+            ObservableList<ItemTm> itemTms = itemBO.ItemFunctions(searchText);
+            tblItem.setItems(itemTms);
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();

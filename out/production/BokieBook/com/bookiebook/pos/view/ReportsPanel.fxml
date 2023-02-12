@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="675.0" prefWidth="1000.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bookiebook.pos.controller.ReportsPanelController">
+   <children>
+      <Label layoutX="396.0" layoutY="14.0" text="Reports Panel" textFill="WHITE">
+         <font>
+            <Font name="Consolas Bold" size="29.0" />
+         </font>
+      </Label>
+      <Separator layoutX="42.0" layoutY="65.0" opacity="0.21" prefHeight="0.0" prefWidth="936.0" />
+      <AnchorPane layoutX="42.0" layoutY="91.0" prefHeight="534.0" prefWidth="266.0" style="-fx-background-radius: 15; -fx-border-color: gray; -fx-border-radius: 15; -fx-border-width: 3;">
+         <children>
+            <ImageView fitHeight="237.0" fitWidth="239.0" layoutX="12.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/shopping.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="29.0" layoutY="298.0" text="Customer Reports" textFill="WHITE">
+               <font>
+                  <Font name="Consolas Bold" size="23.0" />
+               </font>
+            </Label>
+            <Label layoutX="29.0" layoutY="348.0" text="Reports About Customers" textFill="WHITE">
+               <font>
+                  <Font name="Consolas" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="45.0" layoutY="366.0" text="(Customers Details)" textFill="WHITE">
+               <font>
+                  <Font name="Consolas" size="16.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="btnViewCustomer" buttonType="RAISED" layoutX="60.0" layoutY="428.0" onAction="#viewCustomerReportsOnAction" prefHeight="60.0" prefWidth="139.0" style="-fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: #69adf2; -fx-border-width: 3;" text="View" textAlignment="CENTER" textFill="#69adf2">
+               <font>
+                  <Font name="Consolas Bold" size="19.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="367.0" layoutY="91.0" prefHeight="534.0" prefWidth="266.0" style="-fx-background-radius: 15; -fx-border-color: gray; -fx-border-radius: 15; -fx-border-width: 3;">
+         <children>
+            <ImageView fitHeight="237.0" fitWidth="239.0" layoutX="15.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/order.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="50.0" layoutY="295.0" text="Order Reports" textFill="WHITE">
+               <font>
+                  <Font name="Consolas Bold" size="23.0" />
+               </font>
+            </Label>
+            <Label layoutX="45.0" layoutY="345.0" text="Reports About Orders" textFill="WHITE">
+               <font>
+                  <Font name="Consolas" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="63.0" layoutY="363.0" text="(Orders Details)" textFill="WHITE">
+               <font>
+                  <Font name="Consolas" size="16.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="btnViewOrders" buttonType="RAISED" layoutX="63.0" layoutY="425.0" onAction="#viewOrderReportsOnAction" prefHeight="60.0" prefWidth="139.0" style="-fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: #69adf2; -fx-border-width: 3;" text="View" textAlignment="CENTER" textFill="#69adf2">
+               <font>
+                  <Font name="Consolas Bold" size="19.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="680.0" layoutY="91.0" prefHeight="534.0" prefWidth="266.0" style="-fx-background-radius: 15; -fx-border-color: gray; -fx-border-radius: 15; -fx-border-width: 3;">
+         <children>
+            <ImageView fitHeight="237.0" fitWidth="239.0" layoutX="18.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/monitor.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="60.0" layoutY="297.0" text="Item Reports" textFill="WHITE">
+               <font>
+                  <Font name="Consolas Bold" size="23.0" />
+               </font>
+            </Label>
+            <Label layoutX="53.0" layoutY="344.0" text="Reports About Items" textFill="WHITE">
+               <font>
+                  <Font name="Consolas" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="66.0" layoutY="362.0" text="(Item Details)" textFill="WHITE">
+               <font>
+                  <Font name="Consolas" size="16.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="btnViewItem" buttonType="RAISED" layoutX="66.0" layoutY="424.0" onAction="#viewItemReportsOnAction" prefHeight="60.0" prefWidth="139.0" style="-fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: #69adf2; -fx-border-width: 3;" text="View" textAlignment="CENTER" textFill="#69adf2">
+               <font>
+                  <Font name="Consolas Bold" size="19.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

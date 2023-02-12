@@ -1,4 +1,4 @@
-package com.bookiebook.pos.util;
+package com.bookiebook.pos.dao;
 
 import com.bookiebook.pos.DB.DBConnection;
 

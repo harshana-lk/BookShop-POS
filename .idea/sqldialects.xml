@@ -13,6 +13,7 @@
     <file url="file://$PROJECT_DIR$/src/com/bookiebook/pos/controller/SalaryManagePanelController.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/com/bookiebook/pos/controller/UserManagePanelController.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/com/bookiebook/pos/controller/VendorManagePanelController.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/com/bookiebook/pos/dao/custom/impl/CategoryDAOImpl.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/com/bookiebook/pos/model/CategoryModel.java" dialect="GenericSQL" />
   </component>
 </project>

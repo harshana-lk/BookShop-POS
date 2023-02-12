@@ -2,7 +2,7 @@ package com.bookiebook.pos.model;
 
 import com.bookiebook.pos.DB.DBConnection;
 import com.bookiebook.pos.to.Category;
-import com.bookiebook.pos.util.CrudUtil;
+import com.bookiebook.pos.dao.CrudUtil;
 import com.bookiebook.pos.view.tm.CategoryTm;
 
 import java.sql.Connection;

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXProgressBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="loadingScreen" prefHeight="530.0" prefWidth="800.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bookiebook.pos.controller.LoadingScreenController">
+   <children>
+      <ImageView fitHeight="525.0" fitWidth="800.0" layoutY="5.0" opacity="0.3" pickOnBounds="true">
+         <image>
+            <Image url="@../assets/wallpaperflare.com_wallpaper.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="469.0" fitWidth="662.0" layoutX="166.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/trance.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="17.0" layoutY="474.0" text="Loading..." textFill="WHITE">
+         <font>
+            <Font name="Consolas Bold" size="15.0" />
+         </font>
+      </Label>
+      <JFXProgressBar fx:id="progBar" layoutX="17.0" layoutY="509.0" prefHeight="0.0" prefWidth="763.0" />
+   </children>
+</AnchorPane>

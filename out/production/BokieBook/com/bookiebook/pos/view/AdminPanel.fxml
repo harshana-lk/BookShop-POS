@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.media.MediaView?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="mainAnchorpane" prefHeight="780.0" prefWidth="1310.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bookiebook.pos.controller.AdminPanelController">
+   <children>
+      <AnchorPane fx:id="dashAnchorpane" layoutX="297.0" layoutY="94.0" prefHeight="675.0" prefWidth="1000.0">
+         <children>
+            <MediaView fx:id="mediaView" fitHeight="250.0" fitWidth="935.0" layoutX="38.0" layoutY="32.0" />
+            <AnchorPane layoutX="38.0" layoutY="392.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 15; -fx-border-color: gray; -fx-border-radius: 15; -fx-border-width: 3;">
+               <children>
+                  <Label layoutX="63.0" layoutY="47.0" text="Total" textFill="WHITE">
+                     <font>
+                        <Font name="Consolas Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="41.0" layoutY="70.0" text="Customers" textFill="WHITE">
+                     <font>
+                        <Font name="Consolas Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblCustCount" alignment="CENTER" layoutX="9.0" layoutY="107.0" prefHeight="58.0" prefWidth="182.0" text="10" textFill="WHITE">
+                     <font>
+                        <Font name="Consolas Bold" size="50.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="279.0" layoutY="392.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 15; -fx-border-color: gray; -fx-border-radius: 15; -fx-border-width: 3;">
+               <children>
+                  <Label layoutX="63.0" layoutY="47.0" text="Total" textFill="WHITE">
+                     <font>
+                        <Font name="Consolas Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="9.0" layoutY="75.0" text="Oders Delivered" textFill="WHITE">
+                     <font>
+                        <Font name="Consolas Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblOrderCount" alignment="CENTER" layoutX="9.0" layoutY="107.0" prefHeight="58.0" prefWidth="182.0" text="18" textFill="WHITE">
+                     <font>
+                        <Font name="Consolas Bold" size="50.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="519.0" layoutY="392.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 15; -fx-border-color: gray; -fx-border-radius: 15; -fx-border-width: 3;">
+               <children>
+                  <Label layoutX="63.0" layoutY="47.0" text="Total" textFill="WHITE">
+                     <font>
+                        <Font name="Consolas Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="63.0" layoutY="75.0" text="Items" textFill="WHITE">
+                     <font>
+                        <Font name="Consolas Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblItemCount" alignment="CENTER" layoutX="9.0" layoutY="107.0" prefHeight="58.0" prefWidth="182.0" text="38" textFill="WHITE">
+                     <font>
+                        <Font name="Consolas Bold" size="50.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="751.0" layoutY="392.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 15; -fx-border-color: gray; -fx-border-radius: 15; -fx-border-width: 3;">
+               <children>
+                  <Label layoutX="63.0" layoutY="47.0" text="Total" textFill="WHITE">
+                     <font>
+                        <Font name="Consolas Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="72.0" text="Categories" textFill="WHITE">
+                     <font>
+                        <Font name="Consolas Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblCategoryCount" alignment="CENTER" layoutX="9.0" layoutY="107.0" prefHeight="58.0" prefWidth="182.0" text="20" textFill="WHITE">
+                     <font>
+                        <Font name="Consolas Bold" size="50.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="45.0" fitWidth="277.0" layoutX="14.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/trance1.png" />
+         </image>
+      </ImageView>
+      <Circle fx:id="circleClose" fill="RED" layoutX="1287.0" layoutY="23.0" onMouseClicked="#closeOnActions" radius="7.0" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="2.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Circle>
+      <Circle fx:id="icnProfile" fill="#1f93ff00" layoutX="1132.0" layoutY="44.0" radius="15.0" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="3.0" />
+      <Label fx:id="lblName" layoutX="1164.0" layoutY="34.0" onMouseClicked="#profileOnAction" prefHeight="22.0" prefWidth="108.0" text="Name" textFill="WHITE">
+         <font>
+            <Font name="Consolas Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Label>
+      <JFXButton fx:id="btnDashboard" layoutX="50.0" layoutY="125.0" onAction="#dashBoardOnAction" prefHeight="40.0" prefWidth="156.0" ripplerFill="#ffffff00" text="  Dashboard" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Consolas Bold" size="18.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="BARS" size="20" />
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <Bloom />
+         </effect>
+      </JFXButton>
+      <JFXButton fx:id="btnItems" layoutX="51.0" layoutY="223.0" onAction="#itemOnAction" opacity="0.5" ripplerFill="#ffffff00" text="  Manage Items" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Consolas Bold" size="18.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="BOOK" size="20" />
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="btnCategories" layoutX="51.0" layoutY="271.0" onAction="#categoriesOnAction" opacity="0.5" ripplerFill="#ffffff00" text="  Manage Categories" textFill="WHITE">
+         <font>
+            <Font name="Consolas Bold" size="18.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="CLIPBOARD" size="20" />
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="btnEmployee" layoutX="49.0" layoutY="362.0" onMouseClicked="#EmployeeOnAction" opacity="0.5" ripplerFill="#ffffff00" text="  Manage Employees" textFill="WHITE">
+         <font>
+            <Font name="Consolas Bold" size="18.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="USERS" size="20" />
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <Separator layoutX="300.0" layoutY="119.0" opacity="0.2" orientation="VERTICAL" prefHeight="589.0" prefWidth="0.0" />
+      <JFXButton fx:id="btnSalary" layoutX="48.0" layoutY="409.0" onAction="#salaryOnAction" opacity="0.5" ripplerFill="#ffffff00" text="   Manage Salaries" textFill="WHITE">
+         <font>
+            <Font name="Consolas Bold" size="18.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="DOLLAR" size="20" />
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="btnDelivery" layoutX="49.0" layoutY="504.0" onAction="#deliveryOnAction" opacity="0.5" ripplerFill="#ffffff00" text="  Delivery Methods" textFill="WHITE">
+         <font>
+            <Font name="Consolas Bold" size="18.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="TRUCK" size="20" />
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="btnUser" layoutX="50.0" layoutY="454.0" onAction="#userPanelOnAction" opacity="0.5" ripplerFill="#ffffff00" text="  Manage Users " textFill="WHITE">
+         <font>
+            <Font name="Consolas Bold" size="18.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="USER" size="20" />
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="btnOrder" layoutX="61.0" layoutY="555.0" onAction="#placeOrderOnAction" opacity="0.5" prefHeight="34.0" prefWidth="170.0" ripplerFill="#ffffff00" text="  Place Order" textFill="WHITE">
+         <font>
+            <Font name="Consolas Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <ImageView fx:id="imgPlaceOrder" fitHeight="20.0" fitWidth="20.0" layoutX="60.0" layoutY="563.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/cart%20(1).png" />
+         </image>
+      </ImageView>
+      <JFXButton fx:id="btnReports" layoutX="61.0" layoutY="653.0" onAction="#reportsPanelOnAction" opacity="0.5" prefHeight="34.0" prefWidth="129.0" ripplerFill="#ffffff00" text="  Reports" textFill="WHITE">
+         <font>
+            <Font name="Consolas Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <ImageView fx:id="imgReports" fitHeight="20.0" fitWidth="20.0" layoutX="62.0" layoutY="660.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/graph.png" />
+         </image>
+      </ImageView>
+      <JFXButton fx:id="btnVendors" layoutX="57.0" layoutY="318.0" onAction="#vendorOnAction" opacity="0.5" prefHeight="34.0" prefWidth="202.0" ripplerFill="#ffffff00" text="   Manage Vendors" textFill="WHITE">
+         <font>
+            <Font name="Consolas Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <ImageView fx:id="imgVendor" fitHeight="18.0" fitWidth="40.0" layoutX="61.0" layoutY="326.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/market-store.png" />
+         </image>
+      </ImageView>
+      <FontAwesomeIconView fx:id="icnClose" fill="WHITE" glyphName="CLOSE" layoutX="1282.0" layoutY="26.0" onMouseClicked="#CloseOnAction">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></FontAwesomeIconView>
+      <JFXButton fx:id="btnLogOut" layoutX="94.0" layoutY="716.0" onAction="#LogOutOnAction" style="-fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: #69adf2; -fx-border-width: 3;" text="Logout" textAlignment="CENTER" textFill="#69adf2">
+         <font>
+            <Font name="Consolas Bold" size="19.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="btnCustomer" layoutX="50.0" layoutY="173.0" onAction="#customersOnAction" opacity="0.5" prefHeight="40.0" prefWidth="228.0" ripplerFill="#ffffff00" text="  Manage Customers" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Consolas Bold" size="18.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="USER" size="20" />
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <Bloom />
+         </effect>
+      </JFXButton>
+      <ImageView fitHeight="12.0" fitWidth="19.0" layoutX="1141.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/record-button.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="36.0" layoutX="1117.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/man.png" />
+         </image>
+      </ImageView>
+      <JFXButton fx:id="btnOrderDetails" layoutX="56.0" layoutY="605.0" onAction="#OrderDetailsOnAction" opacity="0.5" prefHeight="34.0" prefWidth="186.0" ripplerFill="#ffffff00" text="   Order Details" textFill="WHITE">
+         <font>
+            <Font name="Consolas Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <ImageView fx:id="imgOrderDetails" fitHeight="18.0" fitWidth="31.0" layoutX="62.0" layoutY="612.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/check-list.png" />
+         </image>
+      </ImageView>
+      <JFXTextField fx:id="txtSearch" focusColor="WHITE" layoutX="383.0" layoutY="19.0" prefHeight="31.0" prefWidth="655.0" promptText="Search" unFocusColor="WHITE">
+         <font>
+            <Font name="Consolas Bold" size="15.0" />
+         </font>
+      </JFXTextField>
+      <FontAwesomeIconView fill="WHITE" glyphName="SEARCH" layoutX="356.0" layoutY="45.0" opacity="0.58" size="20" />
+   </children>
+</AnchorPane>

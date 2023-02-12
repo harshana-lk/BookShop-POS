@@ -1,6 +1,9 @@
 package com.bookiebook.pos.controller;
 
 import com.bookiebook.pos.DB.DBConnection;
+import com.bookiebook.pos.bo.BOFactory;
+import com.bookiebook.pos.bo.BOTypes;
+import com.bookiebook.pos.bo.custom.PlaceOrderBO;
 import com.bookiebook.pos.to.ItemDetails;
 import com.bookiebook.pos.to.Order;
 import com.bookiebook.pos.view.tm.CartTm;
@@ -14,7 +17,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -54,9 +56,10 @@ public class PlaceOrderPanelController {
     public Label lblOrderID;
     public Label lblOrderDate;
     ObservableList<CartTm> obList = FXCollections.observableArrayList();
+    PlaceOrderBO placeOrderBO = (PlaceOrderBO) BOFactory.getInstance().getBO(BOTypes.PLACE_ORDER);
 
-    public boolean validate(){
-        if (!(cmbCustID.getValue().isEmpty()||cmbItemID.getValue().isEmpty()||cmbDeliverID.getValue().isEmpty()||txtDistance.getText().isEmpty()||txtQty.getText().isEmpty())){
+    public boolean validate() {
+        if (!(cmbCustID.getValue().isEmpty() || cmbItemID.getValue().isEmpty() || cmbDeliverID.getValue().isEmpty() || txtDistance.getText().isEmpty() || txtQty.getText().isEmpty())) {
             return true;
         }
         return false;
@@ -116,6 +119,7 @@ public class PlaceOrderPanelController {
             while (set.next()) {
                 idList.add(set.getString(1));
             }
+
             ObservableList<String> obList = FXCollections.observableArrayList(idList);
             cmbDeliverID.setItems(obList);
         } catch (SQLException | ClassNotFoundException e) {
@@ -238,6 +242,7 @@ public class PlaceOrderPanelController {
             } else {
                 lblOrderID.setText("ORDER-1");
             }
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -304,8 +309,8 @@ public class PlaceOrderPanelController {
                 }
 
             });
-        }else {
-            Alert alert = new Alert(Alert.AlertType.WARNING,"Please Fill the Unfilled Data !");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Please Fill the Unfilled Data !");
             alert.show();
         }
     }
@@ -376,48 +381,14 @@ public class PlaceOrderPanelController {
                 cmbCustID.getValue(), details
         );
 
-// place Order
-        Connection con = null;
-        try {
+        boolean saved = placeOrderBO.placeOrder(order, details);
 
-            con = DBConnection.getInstance().getConnection();
-            con.setAutoCommit(false);
-
-            String sql = "INSERT `orders` VALUES(?,?,?,?)";
-            PreparedStatement statement = con.prepareStatement(sql);
-            statement.setString(1, order.getOrderId());
-            statement.setString(2, lblOrderDate.getText());
-            statement.setDouble(3, order.getTotalCost());
-            statement.setString(4, order.getCustomer());
-
-            boolean isOrderSaved = statement.executeUpdate() > 0;
-            if (isOrderSaved) {
-                boolean isAllUpdated = manageQty(details);
-                if (isAllUpdated) {
-                    con.commit();
-                    new Alert(Alert.AlertType.CONFIRMATION, "Order Placed!").show();
-                    clearAll();
-                } else {
-                    con.setAutoCommit(true);
-                    con.rollback();
-                    new Alert(Alert.AlertType.WARNING, "Try Again!").show();
-                }
-
-            } else {
-                con.setAutoCommit(true);
-                con.rollback();
-                new Alert(Alert.AlertType.WARNING, "Try Again!").show();
-            }
-
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                con.setAutoCommit(true);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        if (saved) {
+            new Alert(Alert.AlertType.CONFIRMATION, "Order Placed!").show();
+            clearAll();
         }
+
+
     }
 
     private void clearAll() {
@@ -442,57 +413,5 @@ public class PlaceOrderPanelController {
         cmbCustID.requestFocus();
         setOrderID();
     }
-
-    private boolean manageQty(ArrayList<ItemDetails> details) {
-
-        try {
-
-            for (ItemDetails d : details
-            ) {
-
-
-                String sql = "INSERT `orderDetails` VALUES(?,?,?,?)";
-                PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
-                statement.setString(1, d.getId());
-                statement.setString(2, lblOrderID.getText());
-                statement.setDouble(3, d.getUnitPrice());
-                statement.setInt(4, d.getQty());
-
-                boolean isOrderDetailsSaved = statement.executeUpdate() > 0;
-
-                if (isOrderDetailsSaved) {
-                    boolean isQtyUpdated = update(d);
-                    if (!isQtyUpdated) {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-
-
-            }
-
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-
-        return true;
-    }
-
-    private boolean update(ItemDetails d) {
-        try {
-
-            String sql = "UPDATE item SET qtyOnHand=(qtyOnHand-?) WHERE itemID=?";
-            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
-            statement.setInt(1, d.getQty());
-            statement.setString(2, d.getId());
-            return statement.executeUpdate() > 0;
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
 
 }
